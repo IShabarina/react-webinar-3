@@ -1,4 +1,9 @@
 .Head {
+  padding-right: 32px;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
   height: 80px;
   background: #f5f5f5;
 }

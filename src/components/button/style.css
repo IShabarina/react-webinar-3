@@ -1,0 +1,13 @@
+.Button {
+    padding: 3px 9px;
+    background: #EFEFEF;
+    border: 1px solid #767676;
+    border-radius: 2px;
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 15px;
+    text-align: center;
+    color: #000000;
+}

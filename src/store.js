@@ -7,6 +7,9 @@ class Store {
   constructor(initState = {}) {
     this.state = initState;
     this.listeners = []; // Слушатели изменений состояния
+    this.lastMaxCode = initState.list ?
+      Math.max(...initState.list.map(item => item.code))
+      : 0;
   }
 
   /**
@@ -40,13 +43,23 @@ class Store {
     for (const listener of this.listeners) listener();
   }
 
+  //
+  generateCode() {
+    let code = this.lastMaxCode + 1;
+    while (this.state.list.find(item => item.code === code)) {
+      code++;
+    }
+    this.lastMaxCode = code;
+    return code;
+  }
+
   /**
    * Добавление новой записи
    */
   addItem() {
     this.setState({
       ...this.state,
-      list: [...this.state.list, {code: generateCode(), title: 'Новая запись'}]
+      list: [...this.state.list, {code: this.state.list.length + 1, title: 'Новая запись'}]
     })
   };
 
@@ -71,12 +84,7 @@ class Store {
       ...this.state,
       list: this.state.list.map(item => {
         if (item.code === code) {
-          // Смена выделения и подсчёт
-          return {
-            ...item,
-            selected: !item.selected,
-            count: item.selected ? item.count : item.count + 1 || 1,
-          };
+          item.selected = !item.selected;
         }
         // Сброс выделения если выделена
         return item.selected ? {...item, selected: false} : item;
